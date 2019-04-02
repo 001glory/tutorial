@@ -10,6 +10,12 @@ Cache-Control: no-cache
 
 ###
 
+DELETE http://localhost:8080/remove?id=0
+Accept: */*
+Cache-Control: no-cache
+
+###
+
 POST http://localhost:8080/save?id=1&username=dqq
 Accept: */*
 Cache-Control: no-cache
