@@ -1,5 +1,5 @@
 ## Netty之Channel创建
-[](https://github.com/dqqzj/tutorial/blob/master/netty/src/main/resources/pictures/channel/build.png)
+[SS](https://github.com/dqqzj/tutorial/blob/master/netty/src/main/resources/pictures/channel/build.png)
 
 ```java
 package com.github.dqqzj.netty;
