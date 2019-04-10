@@ -5,9 +5,7 @@
 ## I/O模型
 
 - #### 阻塞I/O
-
-  ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/blocking-io.png)
-
+![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/blocking-io.png)
   - 每个请求都需要独立的线程完成数据read，业务处理，数据write的完整操作
   - 当并发数较大时，需要创建大量线程来处理连接，系统资源占用较大
   - 连接建立后，如果当前线程暂时没有数据可读，则线程就阻塞在read操作上，造成线程资源浪费
