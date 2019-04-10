@@ -12,13 +12,13 @@
   - 连接建立后，如果当前线程暂时没有数据可读，则线程就阻塞在read操作上，造成线程资源浪费
 
 - #### I/O复用模型
-  ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/reuse-io.png)
+  ![](https://github.com/dqqzj/tutorial/blob/master/netty/src/main/resources/pictures/netty/reuse-io.png)
 
 - 在I/O复用模型中，会用到select，这个函数也会使进程阻塞，但是和阻塞I/O所不同，这个函数可以同时阻塞多个I/O操作，而且可以同时对多个读操作，多个写操作的I/O函数进行检测，直到有数据可读或可写时，才真正调用I/O操作函数
 
 **Netty的非阻塞I/O的实现关键是基于I/O复用模型，这里用Selector对象表示：**
 
-  ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/noblocking-io.png)
+  ![](https://github.com/dqqzj/tutorial/blob/master/netty/src/main/resources/pictures/netty/noblocking-io.png)
 
 - Netty的IO线程NioEventLoop由于聚合了多路复用器Selector，可以同时并发处理成百上千个客户端连接。当线程从某客户端Socket通道进行读写数据时，若没有数据可用时，该线程可以进行其他任务。线程通常将非阻塞 IO 的空闲时间用于在其他通道上执行 IO 操作，所以单独的线程可以管理多个输入和输出通道。
 
