@@ -7,7 +7,7 @@
 
 - #### 阻塞I/O
 
-  ![Blocking I/O](<https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/blocking-io>)
+  ![Blocking I/O](<https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/blocking-io.png>)
 
   - 每个请求都需要独立的线程完成数据read，业务处理，数据write的完整操作
   - 当并发数较大时，需要创建大量线程来处理连接，系统资源占用较大
