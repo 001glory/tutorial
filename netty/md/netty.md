@@ -1,7 +1,5 @@
 # Netty高性能设计
 
-![](https://github.com/dqqzj/tutorial/blob/master/netty/src/main/resources/pictures/netty/blocking-io.png)
-
 -  Netty作为异步事件驱动的网络，高性能之处主要来自于其I/O模型和线程处理模型，前者决定如何收发数据，后者决定如何处理数据
 
 ## I/O模型
@@ -15,13 +13,13 @@
 
 - #### I/O复用模型
 
-![reuse-io](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/reuse-io.png)
+  ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/reuse-io.png)
 
 - 在I/O复用模型中，会用到select，这个函数也会使进程阻塞，但是和阻塞I/O所不同，这个函数可以同时阻塞多个I/O操作，而且可以同时对多个读操作，多个写操作的I/O函数进行检测，直到有数据可读或可写时，才真正调用I/O操作函数
 
 **Netty的非阻塞I/O的实现关键是基于I/O复用模型，这里用Selector对象表示：**
 
-![noblocking-io](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/noblocking-io.png)
+![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/noblocking-io.png)
 
 - Netty的IO线程NioEventLoop由于聚合了多路复用器Selector，可以同时并发处理成百上千个客户端连接。当线程从某客户端Socket通道进行读写数据时，若没有数据可用时，该线程可以进行其他任务。线程通常将非阻塞 IO 的空闲时间用于在其他通道上执行 IO 操作，所以单独的线程可以管理多个输入和输出通道。
 
@@ -45,7 +43,7 @@
 
 这里借用O'Reilly 大神关于[事件驱动模型解释图](https://link.juejin.im/?target=http%3A%2F%2Fwww.oreilly.com%2Fprogramming%2Ffree%2Fsoftware-architecture-patterns.csp)
 
-![oreilly](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/oreilly.png)
+ ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/oreilly.png)
 
 主要包括4个基本组件：
 
@@ -68,9 +66,9 @@ Reactor模型中有2个关键组成：
 - Reactor Reactor在一个单独的线程中运行，负责监听和分发事件，分发给适当的处理程序来对IO事件做出反应。 它就像公司的电话接线员，它接听来自客户的电话并将线路转移到适当的联系人
 - Handlers 处理程序执行I/O事件要完成的实际事件，类似于客户想要与之交谈的公司中的实际官员。Reactor通过调度适当的处理程序来响应I/O事件，处理程序执行非阻塞操作
 
-![reactor](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/reactor.png)
+ ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/reactor.png)
 
-取决于Reactor的数量和Hanndler线程数量的不同，Reactor模型有3个变种
+取决于Reactor的数量和Handler线程数量的不同，Reactor模型有3个变种
 
 - 单Reactor单线程
 - 单Reactor多线程
@@ -88,7 +86,7 @@ Netty主要**基于主从Reactors多线程模型**（如下图）做了一定的
 
 这里引用Doug Lee大神的Reactor介绍：[Scalable IO in Java](https://link.juejin.im?target=http%3A%2F%2Fgee.cs.oswego.edu%2Fdl%2Fcpjslides%2Fnio.pdf)里面关于主从Reactor多线程模型的图
 
-![scalable](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/scalable.png)
+ ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/scalable.png)
 
 特别说明的是： 虽然Netty的线程模型基于主从Reactor多线程，借用了MainReactor和SubReactor的结构，但是实际实现上，SubReactor和Worker线程在同一个线程池中：
 
@@ -108,11 +106,11 @@ server.group(bossGroup, workerGroup)
 
 # Netty架构设计
 
-![archive](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/archive.png)
+ ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/archive.png)
 
 ## 功能特性
 
-![features](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/features.png)
+ ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/features.png)
 
 ## 模块组件
 
@@ -231,6 +229,6 @@ ChannelHandler本身并没有提供很多方法，因为这个接口有许多的
 
 在 Netty 中每个 Channel 都有且仅有一个 ChannelPipeline 与之对应, 它们的组成关系如下:
 
-![channel-pipeline](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/channel-pipeline.png)
+ ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/channel-pipeline.png)
 
 一个 Channel 包含了一个 ChannelPipeline, 而 ChannelPipeline 中又维护了一个由 ChannelHandlerContext 组成的双向链表, 并且每个 ChannelHandlerContext 中又关联着一个 ChannelHandler。入站事件和出站事件在一个双向链表中，入站事件会从链表head往后传递到最后一个入站的handler，出站事件会从链表tail往前传递到最前一个出站的handler，两种类型的handler互不干扰。
