@@ -42,7 +42,7 @@
 
 这里借用O'Reilly 大神关于[事件驱动模型解释图](https://link.juejin.im/?target=http%3A%2F%2Fwww.oreilly.com%2Fprogramming%2Ffree%2Fsoftware-architecture-patterns.csp)
 
- ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/oreilly.png)
+ ![](https://github.com/dqqzj/tutorial/blob/master/netty/src/main/resources/pictures/netty/oreilly.png)
 
 主要包括4个基本组件：
 
@@ -65,7 +65,7 @@ Reactor模型中有2个关键组成：
 - Reactor Reactor在一个单独的线程中运行，负责监听和分发事件，分发给适当的处理程序来对IO事件做出反应。 它就像公司的电话接线员，它接听来自客户的电话并将线路转移到适当的联系人
 - Handlers 处理程序执行I/O事件要完成的实际事件，类似于客户想要与之交谈的公司中的实际官员。Reactor通过调度适当的处理程序来响应I/O事件，处理程序执行非阻塞操作
 
- ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/reactor.png)
+ ![](https://github.com/dqqzj/tutorial/blob/master/netty/src/main/resources/pictures/netty/reactor.png)
 
 取决于Reactor的数量和Handler线程数量的不同，Reactor模型有3个变种
 
@@ -85,7 +85,7 @@ Netty主要**基于主从Reactors多线程模型**（如下图）做了一定的
 
 这里引用Doug Lee大神的Reactor介绍：[Scalable IO in Java](https://link.juejin.im?target=http%3A%2F%2Fgee.cs.oswego.edu%2Fdl%2Fcpjslides%2Fnio.pdf)里面关于主从Reactor多线程模型的图
 
- ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/scalable.png)
+ ![](https://github.com/dqqzj/tutorial/blob/master/netty/src/main/resources/pictures/netty/scalable.png)
 
 特别说明的是： 虽然Netty的线程模型基于主从Reactor多线程，借用了MainReactor和SubReactor的结构，但是实际实现上，SubReactor和Worker线程在同一个线程池中：
 
@@ -105,11 +105,11 @@ server.group(bossGroup, workerGroup)
 
 # Netty架构设计
 
- ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/archive.png)
+ ![](https://github.com/dqqzj/tutorial/blob/master/netty/src/main/resources/pictures/netty/archive.png)
 
 ## 功能特性
 
- ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/features.png)
+ ![](https://github.com/dqqzj/tutorial/blob/master/netty/src/main/resources/pictures/netty/features.png)
 
 ## 模块组件
 
@@ -174,11 +174,11 @@ ChannelHandler本身并没有提供很多方法，因为这个接口有许多的
 
 保存Channel相关的所有上下文信息，同时关联一个ChannelHandler对象
 
-### ChannelPipline
+### ChannelPipeline
 
 保存ChannelHandler的List，用于处理或拦截Channel的入站事件和出站操作。 ChannelPipeline实现了一种高级形式的拦截过滤器模式，使用户可以完全控制事件的处理方式，以及Channel中各个的ChannelHandler如何相互交互。
 
-下图引用Netty的Javadoc4.1中ChannelPipline的说明，描述了ChannelPipeline中ChannelHandler通常如何处理I/O事件。 I/O事件由ChannelInboundHandler或ChannelOutboundHandler处理，并通过调用ChannelHandlerContext中定义的事件传播方法（例如ChannelHandlerContext.fireChannelRead（Object）和ChannelOutboundInvoker.write（Object））转发到其最近的处理程序。
+下图引用Netty的Javadoc4.1中ChannelPipeline的说明，描述了ChannelPipeline中ChannelHandler通常如何处理I/O事件。 I/O事件由ChannelInboundHandler或ChannelOutboundHandler处理，并通过调用ChannelHandlerContext中定义的事件传播方法（例如ChannelHandlerContext.fireChannelRead（Object）和ChannelOutboundInvoker.write（Object））转发到其最近的处理程序。
 
 ```
                                                  I/O Request
@@ -228,6 +228,6 @@ ChannelHandler本身并没有提供很多方法，因为这个接口有许多的
 
 在 Netty 中每个 Channel 都有且仅有一个 ChannelPipeline 与之对应, 它们的组成关系如下:
 
- ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/channel-pipeline.png)
+ ![](https://github.com/dqqzj/tutorial/blob/master/netty/src/main/resources/pictures/netty/channel-pipeline.png)
 
 一个 Channel 包含了一个 ChannelPipeline, 而 ChannelPipeline 中又维护了一个由 ChannelHandlerContext 组成的双向链表, 并且每个 ChannelHandlerContext 中又关联着一个 ChannelHandler。入站事件和出站事件在一个双向链表中，入站事件会从链表head往后传递到最后一个入站的handler，出站事件会从链表tail往前传递到最前一个出站的handler，两种类型的handler互不干扰。
