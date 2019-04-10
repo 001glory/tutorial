@@ -1,4 +1,5 @@
 # Netty高性能设计
+
 ![](https://github.com/dqqzj/tutorial/blob/master/netty/src/main/resources/pictures/channel/build.png)
 
 -  Netty作为异步事件驱动的网络，高性能之处主要来自于其I/O模型和线程处理模型，前者决定如何收发数据，后者决定如何处理数据
