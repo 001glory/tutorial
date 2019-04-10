@@ -1,13 +1,15 @@
 # Netty高性能设计
 
-![](https://github.com/dqqzj/tutorial/blob/master/netty/src/main/resources/pictures/channel/build.png)
+![](https://github.com/dqqzj/tutorial/blob/master/netty/src/main/resources/pictures/netty/blocking-io.png)
 
 -  Netty作为异步事件驱动的网络，高性能之处主要来自于其I/O模型和线程处理模型，前者决定如何收发数据，后者决定如何处理数据
 
 ## I/O模型
 
 - #### 阻塞I/O
+
 ![](https://github.com/dqqzj/tutorial/tree/master/netty/src/main/resources/pictures/netty/blocking-io.png)
+
   - 每个请求都需要独立的线程完成数据read，业务处理，数据write的完整操作
   - 当并发数较大时，需要创建大量线程来处理连接，系统资源占用较大
   - 连接建立后，如果当前线程暂时没有数据可读，则线程就阻塞在read操作上，造成线程资源浪费
